@@ -1,34 +1,12 @@
 <script setup>
-// composition API
-
-import { ref } from "vue";
-
-const name = ref("Shakil Ahmed");
-const status = ref("active");
-const tasks = ref(["one", "two", "three", "four"]);
-
-const toggleStatus = () => {
-  if (status.value === "active") {
-    status.value = "pending";
-  } else if (status.value === "pending") {
-    status.value = "inactive";
-  } else {
-    status.value = "active";
-  }
-};
+import Cards from "./components/Cards.vue";
+import Navbar from "./components/Navbar.vue";
 </script>
 
 <template>
-  <h2>{{ name }}</h2>
-  <p v-if="status === 'active'">User is active</p>
-  <p v-else-if="status === 'pending'">User is pending</p>
-  <p v-else>User is inactive</p>
-
-  <h3>Tasks</h3>
-  <ul>
-    <li v-for="item in tasks" key="item">{{ item }}</li>
-  </ul>
-
-  <!-- <button v-on:click="toggleStatus">Change Status</button> -->
-  <button @click="toggleStatus">Change Status</button>
+  <Navbar
+    title="I'm a frotend developer"
+    subtitle="I'm skilled in javascript and reactjs"
+  />
+  <Cards />
 </template>
