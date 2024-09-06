@@ -1,11 +1,10 @@
 <script setup>
+import Practice1 from "./practiceComponent/Practice1.vue";
+import ShoppingLists from "./practiceComponent/ShoppingLists.vue";
+
 // import Carts from "./cartComponent/Carts.vue";
 // import Cards from "./components/Cards.vue";
 // import Navbar from "./components/Navbar.vue";
-
-import { ref } from "vue";
-
-const msg = ref("Hello world");
 </script>
 
 <template>
@@ -16,11 +15,7 @@ const msg = ref("Hello world");
     />
     <Cards />
     <Carts /> -->
+    <Practice1 />
+    <ShoppingLists />
   </div>
-  <!-- double mustaches is used for templating syntax to bind data to the DOM  -->
-  <h1>{{ msg }}</h1>
-
-  <!-- v-model is used for two way data binding -->
-  <input class="mr-2" type="text" v-model="msg" />
-  <input type="text" v-model="msg" />
 </template>
