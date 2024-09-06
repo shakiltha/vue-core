@@ -17,15 +17,16 @@ const newItem = ref("");
 // const newItemPriority = ref("low");
 const newItemHighPriority = ref(false);
 const iceCreamFlavors = ref([]);
+const saveItem = () => {
+  items.value.push({ id: items.value.length + 1, label: newItem.value });
+  newItem.value = "";
+};
 </script>
 <template>
   <h2 class="text-2xl font-semibold p-2">{{ header }}</h2>
   <!-- we have many v-model modifier that modify the behavior of v-model such as, v-model.lazy/number/trim -->
   <!-- @ can be used instead of v-on -->
-  <form
-    class="add-item-form"
-    @submit.prevent="items.push({ id: items.length + 1, label: newItem })"
-  >
+  <form class="add-item-form" @submit.prevent="saveItem">
     >
     <input v-model.trim="newItem" type="text" placeholder="add an item" />
 
