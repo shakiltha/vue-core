@@ -21,7 +21,22 @@ const iceCreamFlavors = ref([]);
 <template>
   <h2 class="text-2xl font-semibold p-2">{{ header }}</h2>
   <!-- we have many v-model modifier that modify the behavior of v-model such as, v-model.lazy/number/trim -->
-  <input v-model.trim="newItem" type="text" placeholder="add an item" />
+  <!-- @ can be used instead of v-on -->
+  <form
+    class="add-item-form"
+    @submit.prevent="items.push({ id: items.length + 1, label: newItem })"
+  >
+    >
+    <input v-model.trim="newItem" type="text" placeholder="add an item" />
+
+    <label for="">
+      <input type="checkbox" v-model="newItemHighPriority" />
+      High Priority
+    </label>
+    <button class="bg-blue-600 text-white p-2 border rounded-xl">
+      Save Item
+    </button>
+  </form>
   <!-- Priority:
   <label for="">
     <input type="radio" v-model="newItemPriority" value="low" />
@@ -38,11 +53,7 @@ const iceCreamFlavors = ref([]);
       <option value="high">High</option>
     </select>
   </label> -->
-  <label for="">
-    <input type="checkbox" v-model="newItemHighPriority" />
-    High Priority
-  </label>
-  <label for="">
+  <!-- <label for="">
     <input type="checkbox" value="vanilla" v-model="iceCreamFlavors" />
     Vanilla
   </label>
@@ -53,7 +64,7 @@ const iceCreamFlavors = ref([]);
   <label for="">
     <input type="checkbox" value="strawberry" v-model="iceCreamFlavors" />
     Strawberry
-  </label>
+  </label> -->
   <br />
   {{ iceCreamFlavors }}
   <ul>
