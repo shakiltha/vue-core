@@ -13,9 +13,49 @@ const items = ref([
 //   "item-2": { id: 2, label: "2 board games" },
 //   "item-3": { id: 3, label: "20 cups" },
 // });
+const newItem = ref("");
+// const newItemPriority = ref("low");
+const newItemHighPriority = ref(false);
+const iceCreamFlavors = ref([]);
 </script>
 <template>
   <h2 class="text-2xl font-semibold p-2">{{ header }}</h2>
+  <!-- we have many v-model modifier that modify the behavior of v-model such as, v-model.lazy/number/trim -->
+  <input v-model.trim="newItem" type="text" placeholder="add an item" />
+  <!-- Priority:
+  <label for="">
+    <input type="radio" v-model="newItemPriority" value="low" />
+    Low
+  </label>
+  <label for="">
+    <input type="radio" v-model="newItemPriority" value="high" />
+    High
+  </label> -->
+  <!-- <label for="">
+    Priority:
+    <select name="" id="" v-model="newItemPriority">
+      <option value="low">Low</option>
+      <option value="high">High</option>
+    </select>
+  </label> -->
+  <label for="">
+    <input type="checkbox" v-model="newItemHighPriority" />
+    High Priority
+  </label>
+  <label for="">
+    <input type="checkbox" value="vanilla" v-model="iceCreamFlavors" />
+    Vanilla
+  </label>
+  <label for="">
+    <input type="checkbox" value="chocolate" v-model="iceCreamFlavors" />
+    Chocolate
+  </label>
+  <label for="">
+    <input type="checkbox" value="strawberry" v-model="iceCreamFlavors" />
+    Strawberry
+  </label>
+  <br />
+  {{ iceCreamFlavors }}
   <ul>
     <!-- v-for is simply a for loop in JS.  -->
     <!-- you have used : before key attribute. this is called attribute binding -->
