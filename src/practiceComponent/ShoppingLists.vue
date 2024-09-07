@@ -1,7 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const header = ref("Shopping List App");
+// computed property
+const characterCount = computed(() => {
+  if (newItem.value.length > 50) return "Character count exceeded";
+  return newItem.value.length;
+});
 const editing = ref(false);
 const items = ref([
   { id: 1, label: "10 party hats", purchased: true, highPriority: false },
@@ -9,6 +14,10 @@ const items = ref([
   { id: 3, label: "20 cups", purchased: false, highPriority: true },
   { id: 4, label: "40 cups", purchased: false, highPriority: true },
 ]);
+
+const reversedItems = computed(() => {
+  return [...items.value].reverse();
+});
 // const items = ref({
 //   "item-1": { id: 1, label: "10 party hats" },
 //   "item-2": { id: 2, label: "2 board games" },
@@ -68,6 +77,8 @@ const togglePurchased = (item) => {
       Save Item
     </button>
   </form>
+  <!-- showing computed property -->
+  <p>{{ characterCount }}/50</p>
   <!-- Priority:
   <label for="">
     <input type="radio" v-model="newItemPriority" value="low" />
@@ -107,7 +118,7 @@ const togglePurchased = (item) => {
     <!-- you can add regular class attribute in addition to bound class attr -->
     <!-- object syntax -->
     <li
-      v-for="(item, index) in items"
+      v-for="(item, index) in reversedItems"
       :key="item.id"
       class="border"
       :class="{
