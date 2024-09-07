@@ -2,11 +2,12 @@
 import { ref } from "vue";
 
 const header = ref("Shopping List App");
+const editing = ref(false);
 const items = ref([
-  { id: 1, label: "10 party hats" },
-  { id: 2, label: "2 board games" },
-  { id: 3, label: "20 cups" },
-  { id: 4, label: "40 cups" },
+  // { id: 1, label: "10 party hats" },
+  // { id: 2, label: "2 board games" },
+  // { id: 3, label: "20 cups" },
+  // { id: 4, label: "40 cups" },
 ]);
 // const items = ref({
 //   "item-1": { id: 1, label: "10 party hats" },
@@ -21,13 +22,28 @@ const saveItem = () => {
   items.value.push({ id: items.value.length + 1, label: newItem.value });
   newItem.value = "";
 };
+const doEdit = (e) => {
+  editing.value = e;
+  newItem.value = "";
+};
 </script>
 <template>
-  <h2 class="text-2xl font-semibold p-2">{{ header }}</h2>
+  <div class="header">
+    <h2 class="text-2xl font-semibold p-2">{{ header }}</h2>
+    <button
+      class="p-2 border bg-slate-400"
+      v-if="editing"
+      @click="doEdit(false)"
+    >
+      Cancel
+    </button>
+    <button class="p-2 border bg-slate-400" v-else @click="doEdit(true)">
+      Add item
+    </button>
+  </div>
   <!-- we have many v-model modifier that modify the behavior of v-model such as, v-model.lazy/number/trim -->
   <!-- @ can be used instead of v-on -->
-  <form class="add-item-form" @submit.prevent="saveItem">
-    >
+  <form class="add-item-form" @submit.prevent="saveItem" v-if="editing">
     <input v-model.trim="newItem" type="text" placeholder="add an item" />
 
     <label for="">
@@ -78,4 +94,5 @@ const saveItem = () => {
       {{ label }}
     </li>
   </ul>
+  <p v-if="!items.length">No item available</p>
 </template>
