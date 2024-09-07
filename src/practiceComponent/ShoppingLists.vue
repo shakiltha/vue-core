@@ -4,10 +4,10 @@ import { ref } from "vue";
 const header = ref("Shopping List App");
 const editing = ref(false);
 const items = ref([
-  // { id: 1, label: "10 party hats" },
-  // { id: 2, label: "2 board games" },
-  // { id: 3, label: "20 cups" },
-  // { id: 4, label: "40 cups" },
+  { id: 1, label: "10 party hats", purchased: true, highPriority: false },
+  { id: 2, label: "2 board games", purchased: true, highPriority: false },
+  { id: 3, label: "20 cups", purchased: false, highPriority: true },
+  { id: 4, label: "40 cups", purchased: false, highPriority: true },
 ]);
 // const items = ref({
 //   "item-1": { id: 1, label: "10 party hats" },
@@ -19,12 +19,21 @@ const newItem = ref("");
 const newItemHighPriority = ref(false);
 const iceCreamFlavors = ref([]);
 const saveItem = () => {
-  items.value.push({ id: items.value.length + 1, label: newItem.value });
+  items.value.push({
+    id: items.value.length + 1,
+    label: newItem.value,
+    highPriority: newItemHighPriority.value,
+  });
   newItem.value = "";
+  highPriority.value = "";
 };
 const doEdit = (e) => {
   editing.value = e;
   newItem.value = "";
+};
+
+const togglePurchased = (item) => {
+  item.purchased = !item.purchased;
 };
 </script>
 <template>
@@ -41,6 +50,8 @@ const doEdit = (e) => {
       Add item
     </button>
   </div>
+  <!-- binding href to newItem reactive -->
+  <!-- <a v-bind:href="newItem" class="my-2 text-2xl underline">dynamic link</a> -->
   <!-- we have many v-model modifier that modify the behavior of v-model such as, v-model.lazy/number/trim -->
   <!-- @ can be used instead of v-on -->
   <form class="add-item-form" @submit.prevent="saveItem" v-if="editing">
@@ -50,7 +61,10 @@ const doEdit = (e) => {
       <input type="checkbox" v-model="newItemHighPriority" />
       High Priority
     </label>
-    <button class="bg-blue-600 text-white p-2 border rounded-xl">
+    <button
+      :disabled="newItem.length < 5"
+      class="bg-blue-600 text-white p-2 border rounded-xl"
+    >
       Save Item
     </button>
   </form>
@@ -89,10 +103,34 @@ const doEdit = (e) => {
     <!-- you have used : before key attribute. this is called attribute binding -->
     <!-- {} is syntax for destructuring object -->
     <!-- v-for is reactive. that means if you add or remove an object to the array it will automatically update the dom  -->
-    <li v-for="({ id, label }, index) in items" :key="id">
+    <!-- you can use object or array syntax to bind classes -->
+    <!-- you can add regular class attribute in addition to bound class attr -->
+    <!-- object syntax -->
+    <li
+      v-for="(item, index) in items"
+      :key="item.id"
+      class="border"
+      :class="{
+        'line-through': item.purchased,
+        'text-yellow-400': item.highPriority,
+        'static-class': true,
+      }"
+      @click="togglePurchased(item)"
+    >
+      {{ index }}
+      {{ item.label }}
+    </li>
+    <!-- every string you put inside [] is regular class, if you want to use class dynamically you can use ternary operator -->
+    <!-- also you can put object inside array -->
+    <!-- <li
+      v-for="({ id, label, purchased, highPriority }, index) in items"
+      :key="id"
+      class="border"
+      :class="[purchased ? 'line-through text-blue-500' : 'text-teal-950']"
+    >
       {{ index }}
       {{ label }}
-    </li>
+    </li> -->
   </ul>
   <p v-if="!items.length">No item available</p>
 </template>
